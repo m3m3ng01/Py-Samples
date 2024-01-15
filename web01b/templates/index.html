@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculator[API]</title>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    </head>
+<body class="bg-gray-200 p-4">
+    <h1 class="text-2xl font-bold mb-4">Simple Calculator with API</h1>
+    <div class="calculator">
+        <div class="flex items-center mb-4">
+            <label for="number1" class="mr-4">Number 1:</label>
+            <input type="number" id="number1" class="w-40 border rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <div class="flex items-center mb-4">
+            <label for="number2" class="mr-4">Number 2:</label>
+            <input type="number" id="number2" class="w-40 border rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <div class="flex items-center">
+            <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" id="addButton">Add</button>
+            <button type="button" class="bg-gray-400 hover:bg-gray-600 text-gray-800 font-bold py-2 px-4 ml-4 rounded" id="subtractButton">Subtract</button>
+        </div>
+        <p class="mt-4 text-xl font-bold" id="result"></p>
+    </div>
+
+    <script>
+        const number1Input = document.getElementById('number1');
+        const number2Input = document.getElementById('number2');
+        const addButton = document.getElementById('addButton');
+        const subtractButton = document.getElementById('subtractButton');
+        const resultElement = document.getElementById('result');
+
+        const calculate = async (operation) => {
+            try {
+                const number1 = parseFloat(number1Input.value);
+                const number2 = parseFloat(number2Input.value);
+
+                const response = await fetch('/calculate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        number1,
+                        number2,
+                        operation
+                    })
+                });
+
+                const data = await response.json();
+                resultElement.textContent = `Result: ${data.result}`;
+            } catch (error) {
+                console.error('Error:', error);
+                resultElement.textContent = 'Error: Unable to perform calculation';
+            }
+        };
+
+        addButton.addEventListener('click', () => calculate('add'));
+        subtractButton.addEventListener('click', () => calculate('subtract'));
+    </script>
+</body>
+</html>
