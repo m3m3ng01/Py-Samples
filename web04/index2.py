@@ -9,7 +9,7 @@ from xendit.apis import BalanceApi, PaymentRequestApi
 app = Flask(__name__)
 
 #NOTE config
-Xendit_API_key = "xnd_development_7rhmCbGS5ykRrTwn827pzOlvOZhMIJ6ZTKWzuLsuZyNZK2oqX5OPnramjSZhEz"
+Xendit_API_key = "you-Xendit-API-Key"
 BASE_URL="http://localhost:5000"
 
 #NOTE init
